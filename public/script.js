@@ -3,9 +3,7 @@ console.log("Sanity Check: JS is working!");
 //
 // @Kelcey Wison I find Punit’s solution particularly elegant. (https://github.com/punitrathore/mutably-starter/blob/punit-solution/public/script.js) He defines UI renderers, ELEMENT grabbers, ACTIONS and fetchers (BookStore). If you were going to refactor your code I’d suggest setting up those same categories and then seeing how far you can get without referring to his solution.
 $(document).ready(function(){
-
   getBooks()
-
 });
 
 // separate out different “kinds” of code: ui rendering code, fetching code, code that represents the data store, code that gets particular dom elements.
