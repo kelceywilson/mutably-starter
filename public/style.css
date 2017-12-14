@@ -1,8 +1,18 @@
 /*Custom styles here*/
-.hide {
-  display: none;
-}
 
 input {
   width: 100%;
+}
+button{
+  margin: 2px 0 2px 15px;
+}
+.hide {
+  display: none;
+}
+.single-book {
+  display: flex;
+  flex-direction: column;
+}
+.single-book span, .single-book input {
+  margin: 2px 15px;
 }

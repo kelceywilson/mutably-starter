@@ -1,15 +1,14 @@
 console.log("Sanity Check: JS is working!");
-// Justin Haaheim [9 minutes ago]
-// Strongly suggest you separate out different “kinds” of code: ui rendering code, fetching code, code that represents the data store, code that gets particular dom elements.
+// Deploy on heroku
 //
-//
-// Justin Haaheim [2 minutes ago]
 // @Kelcey Wison I find Punit’s solution particularly elegant. (https://github.com/punitrathore/mutably-starter/blob/punit-solution/public/script.js) He defines UI renderers, ELEMENT grabbers, ACTIONS and fetchers (BookStore). If you were going to refactor your code I’d suggest setting up those same categories and then seeing how far you can get without referring to his solution.
 $(document).ready(function(){
 
   getBooks()
 
 });
+
+// separate out different “kinds” of code: ui rendering code, fetching code, code that represents the data store, code that gets particular dom elements.
 
 const baseUrl = 'http://mutably.herokuapp.com/books/'
 // GET	/books	READS all books
@@ -19,14 +18,15 @@ function getBooks () {
   .then(data => {
     console.log(data)
     data.books.forEach(book => {
-      $('.list-group').append(`
+      $('.list-group').prepend(`
         <div class='book-div-${book._id}'>
-          <div id='${book._id}'>
-            <span class='title-${book._id}'>${book.title}</span> by
+          <div class='single-book' id='${book._id}'>
+            <span class='title-${book._id}'>${book.title}</span>
+            <span>by</span>
             <span class='author-${book._id}'>${book.author}</span>
+            <span><img class='image-${book._id}' src=${book.image} width='50px' height='50px' alt='book cover' /></span>
           </div>
-          <img src=${book.image} width='50px' height='50px' alt='book cover' />
-          <button class='btn btn-primary ${book._id}' onClick='editBook(this)' data-id=${book._id}>Edit</button>
+          <button class='btn btn-primary ${book._id}' onClick='editBook(this)' data-id=${book._id} data-url=${book.image}>Edit</button>
           <button class='hide btn btn-success ${book._id}' onClick='updateBook(this)' data-id=${book._id} data-url=${book.image}>Save</button>
           <button class='btn btn-danger ${book._id}' onClick='deleteBook(this)' data-id=${book._id}>Delete</button>
           <hr>
@@ -38,9 +38,9 @@ function getBooks () {
 }
 
 function editBook (elem) {
-  console.log(elem);
   // get book id
   var id = $(elem).data('id')
+  var url = $(elem).data('url')
   // show Save button and hide Edit button
   $(`.${id}`).toggleClass('hide')
   // function to convert book info into input boxes
@@ -53,7 +53,41 @@ function editBook (elem) {
       var spanText = $( this ).text()
       return `<input class='author-${id}' type="text" value='${spanText}'>`
     })
+    $(`img.image-${id}`).replaceWith(function(){
+      return `<input class='image-${id}' type="text" value='${url}'>`
+    })
   })
+}
+function addBook () {
+  const title = $('.title').val()
+  const author = $('.author').val()
+  const image = $('.image').val()
+  const book = 'newBook'
+  console.log(title, author, image);
+  $('.list-group').prepend(`
+    <div class='book-div-${book}'>
+      <div class='single-book' id='${book}'>
+        <span class='title-${book}'>${title}</span>
+        <span>by</span>
+        <span class='author-${book}'>${author}</span>
+        <span><img class='image-${book}' src=${image} width='50px' height='50px' alt='book cover' /></span>
+      </div>
+      <button class='btn btn-primary ${book}' onClick='editBook(this)' data-id=${book} data-url=${image}>Edit</button>
+      <button class='hide btn btn-success ${book}' onClick='updateBook(this)' data-id=${book} data-url=${image}>Save</button>
+      <button class='btn btn-danger ${book}' onClick='deleteBook(this)' data-id=${book}>Delete</button>
+      <hr>
+    </div>
+  `)
+  fetch(baseUrl, {
+    method: 'POST',
+    body: JSON.stringify({
+      title,
+      author,
+      image
+    }),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(console.log)
 }
 
 function updateBook (elem) {
@@ -69,6 +103,10 @@ function updateBook (elem) {
     $(`input.author-${id}`).replaceWith(function(){
       author = $( this ).val()
       return `<span class='author-${id}'>${author}</span>`
+    })
+    $(`input.image-${id}`).replaceWith(function(){
+      image = $( this ).val()
+      return `<img class='image-${id}' src=${image} width='50px' height='50px' alt='book cover' />`
     })
   })
   fetch(baseUrl + id, {
