@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 // separate out different “kinds” of code: ui rendering code, fetching code, code that represents the data store, code that gets particular dom elements.
 
-const baseUrl = 'http://mutably.herokuapp.com/books/'
+const baseUrl = 'https://mutably.herokuapp.com/books/'
 // GET	/books	READS all books
 function getBooks () {
   fetch(baseUrl)
