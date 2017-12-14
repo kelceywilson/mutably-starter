@@ -14,7 +14,6 @@ function getBooks () {
   fetch(baseUrl)
   .then(resp => resp.json())
   .then(data => {
-    console.log(data)
     data.books.forEach(book => {
       $('.list-group').prepend(`
         <div class='book-div-${book._id}'>
