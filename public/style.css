@@ -1,18 +1,101 @@
 /*Custom styles here*/
-
+body {
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 25px;
+}
+h1 {
+  background-color: lightgrey;
+  line-height: 50px;
+  text-align: center;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 0;
+}
+h4 {
+  margin-bottom: 0;
+}
 input {
   width: 100%;
 }
-button{
-  margin: 2px 0 2px 15px;
+label, input {
+  display: inline-block;
+  white-space: nowrap;
+  margin: 5px;
+  line-height: 25px;
+  font-size: .8em;
+}
+.reset-seed {
+  text-align: center;
+  font-size: .8em;
+  margin-top: -10px;
+}
+.edit {
+  width: auto;
+}
+.book-container {
+  width: 50%;
+  min-width: 350px;
+}
+.book-column {
+  display: flex;
+  flex-direction: column;
+}
+.row {
+  display: flex;
+  flex-direction: row;
 }
 .hide {
   display: none;
 }
-.single-book {
+.new-book-form {
   display: flex;
   flex-direction: column;
 }
-.single-book span, .single-book input {
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.single-book span, .single-book img, .single-book input {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 15px;
+  width: 90%;
+  text-align: center;
+}
+.single-book img {
+  width: 40%;
+  height: 40%;
+  box-shadow: 5px 5px 5px grey;
+}
+/* .single-book span, .single-book input, .single-book img {
+  margin: 0 15px;
+} */
+/*********************
+      buttons
+**********************/
+button{
   margin: 2px 15px;
+  height: 30px;
+  min-width: 100px;
+  background-color: lightgreen;
+  font-size: .8em;
+  border: none;
+  border-radius: 70px;
+  box-shadow: 5px 5px 5px grey;
+}
+.delete-button {
+  background-color: pink;
+  /* color: white; */
+}
+.edit-button {
+  background-color: lightblue;
+  margin-top: 70px;
+}
+.save-button {
+  background-color: lightgreen;
 }

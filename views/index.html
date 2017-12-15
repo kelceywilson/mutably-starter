@@ -2,29 +2,36 @@
 <html>
   <head>
     <title>Mutably front-end</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/style.css">
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="/script.js"></script>
   </head>
-  <body class="container">
-    <div class="col-sm-8 col-sm-offset-2">
-      <nav class="navbar navbar-default">
-        <a class="navbar-brand" href="/">Mutably Front-end</a>
-      </nav>
-      <div class="panel panel-default">
-        <div class="panel-heading">Books</div>
-        <div class="new-book-form">
-          <p>Add a Book</p>
-          <input class='title' type='text' placeholder="title">
-          <input class='author' type="text" placeholder="author">
-          <input class='image' type="text" placeholder="image">
-          <button onClick="addBook()">Add Book</button>
+  <body>
+    <div class="book-container">
+      <h1>Mutably Front-End</h1>
+      <h2>BOOKS</h2>
+      <div class="reset-seed">
+        <a target='_blank' href='http://mutably.herokuapp.com/'>reset seed data here</a>
+      </div>
+      <div class="new-book-form">
+        <h4>ADD A BOOK</h3>
+        <div class='row'>
+          <label for='title'>Title</label>
+          <input id='title' class='title' type='text' placeholder=" title">
         </div>
-        <hr />
-        <div class="list-group">
-          <!-- your resource items here -->
+        <div class='row'>
+          <label for='author'>Author</label>
+          <input id='author' class='author' type="text" placeholder=" author">
         </div>
+        <div class='row'>
+          <label for='image'>Image URL</label>
+          <input id='image' class='image' type="text" placeholder=" image URL">
+        </div>
+        <button class="add-button" onClick="addBook()">Add Book</button>
+      </div>
+      <hr />
+      <div class="list-group">
+        <!-- your resource items here -->
       </div>
     </div>
   </body>

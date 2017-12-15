@@ -18,14 +18,18 @@ function getBooks () {
       $('.list-group').prepend(`
         <div class='book-div-${book._id}'>
           <div class='single-book' id='${book._id}'>
-            <span class='title-${book._id}'>${book.title}</span>
-            <span>by</span>
-            <span class='author-${book._id}'>${book.author}</span>
-            <span><img class='image-${book._id}' src=${book.image} width='50px' height='50px' alt='book cover' /></span>
+            <div class='edit-layout-${book._id} row'>
+              <div>
+                <span class='title-${book._id}'>${book.title}</span>
+                <span>by</span>
+                <span class='author-${book._id}'>${book.author}</span>
+                <button class='edit-button ${book._id}' onClick='editBook(this)' data-id=${book._id} data-url=${book.image}>Edit</button>
+                <button class='delete-button ${book._id}' onClick='deleteBook(this)' data-id=${book._id}>Delete</button>
+              </div>
+              <img class='image-${book._id}' src=${book.image} alt='book cover' />
+            </div>
           </div>
-          <button class='btn btn-primary ${book._id}' onClick='editBook(this)' data-id=${book._id} data-url=${book.image}>Edit</button>
-          <button class='hide btn btn-success ${book._id}' onClick='updateBook(this)' data-id=${book._id} data-url=${book.image}>Save</button>
-          <button class='btn btn-danger ${book._id}' onClick='deleteBook(this)' data-id=${book._id}>Delete</button>
+          <button class='hide save-button ${book._id}' onClick='updateBook(this)' data-id=${book._id} data-url=${book.image}>Save</button>
           <hr>
         </div>
         `)
@@ -34,27 +38,6 @@ function getBooks () {
     .catch(error => console.log(error))
 }
 
-function editBook (elem) {
-  // get book id
-  var id = $(elem).data('id')
-  var url = $(elem).data('url')
-  // show Save button and hide Edit button
-  $(`.${id}`).toggleClass('hide')
-  // function to convert book info into input boxes
-  $(`#${id}`).each(function(){
-    $(`span.title-${id}`).replaceWith(function(){
-      var spanText = $( this ).text()
-      return `<input class='title-${id}' type='text' value='${spanText}'>`
-    })
-    $(`span.author-${id}`).replaceWith(function(){
-      var spanText = $( this ).text()
-      return `<input class='author-${id}' type="text" value='${spanText}'>`
-    })
-    $(`img.image-${id}`).replaceWith(function(){
-      return `<input class='image-${id}' type="text" value='${url}'>`
-    })
-  })
-}
 function addBook () {
   const title = $('.title').val()
   const author = $('.author').val()
@@ -64,14 +47,18 @@ function addBook () {
   $('.list-group').prepend(`
     <div class='book-div-${book}'>
       <div class='single-book' id='${book}'>
-        <span class='title-${book}'>${title}</span>
-        <span>by</span>
-        <span class='author-${book}'>${author}</span>
-        <span><img class='image-${book}' src=${image} width='50px' height='50px' alt='book cover' /></span>
+        <div class='edit-layout row'>
+          <div>
+            <span class='title-${book}'>${title}</span>
+            <span>by</span>
+            <span class='author-${book}'>${author}</span>
+            <button class='edit-button ${book}' onClick='editBook(this)' data-id=${book} data-url=${image}>Edit</button>
+            <button class='delete-button ${book}' onClick='deleteBook(this)' data-id=${book}>Delete</button>
+          </div>
+          <img class='image-${book}' src=${image} alt='book cover' />
+        </div>
       </div>
-      <button class='btn btn-primary ${book}' onClick='editBook(this)' data-id=${book} data-url=${image}>Edit</button>
-      <button class='hide btn btn-success ${book}' onClick='updateBook(this)' data-id=${book} data-url=${image}>Save</button>
-      <button class='btn btn-danger ${book}' onClick='deleteBook(this)' data-id=${book}>Delete</button>
+      <button class='hide save-button ${book}' onClick='updateBook(this)' data-id=${book} data-url=${image}>Save</button>
       <hr>
     </div>
   `)
@@ -87,11 +74,35 @@ function addBook () {
   .then(console.log)
 }
 
+function editBook (elem) {
+  // get book id
+  var id = $(elem).data('id')
+  var url = $(elem).data('url')
+  // show Save button and hide Edit button
+  $(`.${id}`).toggleClass('hide')
+  $(`.edit-layout-${id}`).toggleClass('row')
+  // function to convert book info into input boxes
+  $(`#${id}`).each(function(){
+    $(`span.title-${id}`).replaceWith(function(){
+      var spanText = $( this ).text()
+      return `<input class='edit title-${id}' type='text' value='${spanText}'>`
+    })
+    $(`span.author-${id}`).replaceWith(function(){
+      var spanText = $( this ).text()
+      return `<input class='edit author-${id}' type="text" value='${spanText}'>`
+    })
+    $(`img.image-${id}`).replaceWith(function(){
+      return `<input class='edit image-${id}' type="text" value='${url}'>`
+    })
+  })
+}
+
 function updateBook (elem) {
   var id = $(elem).data('id')
   var image = $(elem).data('url')
   var title, author
   $(`.${id}`).toggleClass('hide')
+  $(`.edit-layout-${id}`).toggleClass('row')
   $(`#${id}`).each(function(){
     $(`input.title-${id}`).replaceWith(function(){
       title = $( this ).val()
