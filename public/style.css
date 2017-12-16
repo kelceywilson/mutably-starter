@@ -88,14 +88,14 @@ button{
   border-radius: 70px;
   box-shadow: 5px 5px 5px grey;
 }
+.edit-button {
+  background-color: lightblue;
+}
 .delete-button {
   background-color: pink;
   /* color: white; */
 }
-.edit-button {
-  background-color: lightblue;
-  margin-top: 70px;
-}
+
 .save-button {
   background-color: lightgreen;
 }
