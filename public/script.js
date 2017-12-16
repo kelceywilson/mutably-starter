@@ -131,11 +131,9 @@ function updateBook (elem) {
 
 function deleteBook (elem) {
   var id = $(elem).data('id')
-
   fetch(baseUrl + id, {
     method: 'DELETE'
   })
   .then(console.log)
-
   $(`.book-div-${id}`).remove()
 }
